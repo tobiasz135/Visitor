@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_none"
+            android:title=""
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="Mapa" />
+        <item
+            android:id="@+id/nav_achievements"
+            android:icon="@drawable/ic_achievements"
+            android:title="Osiągnięcia" />
+        <item
+            android:id="@+id/nav_about"
+            android:enabled="false"
+            android:icon="@drawable/ic_info"
+            android:title="O aplikacji" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:enabled="false"
+                android:icon="@drawable/ic_share"
+                android:title="Udostępnij" />
+            <item
+                android:id="@+id/nav_send"
+                android:enabled="false"
+                android:icon="@drawable/ic_share"
+                android:title="Wyślij" />
+        </menu>
+    </item>
+
+</menu>
