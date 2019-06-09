@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,12 +10,23 @@
         android:id="@+id/searchFilter"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/searchList"
+        app:layout_constraintBottom_toTopOf="@+id/searchList2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/searchList"
+        android:id="@+id/searchList2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/searchFilter" />
-</android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/searchFilter" >
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/searchFilter2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:editable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toTopOf="@+id/searchList2"
+        app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>

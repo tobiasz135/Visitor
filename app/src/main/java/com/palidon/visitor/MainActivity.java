@@ -1,5 +1,6 @@
 package com.palidon.visitor;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -57,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddCityFragment()).commit();
-                navigationView.setCheckedItem(R.id.menu_none);
+               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddCityFragment()).commit();
+               // navigationView.setCheckedItem(R.id.menu_none);
+                startActivity(new Intent(MainActivity.this,SearchFilter.class));
+
             }
         });
 
