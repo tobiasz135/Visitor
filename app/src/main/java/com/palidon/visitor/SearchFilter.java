@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SearchFilter extends AppCompatActivity {
-    //private static final String TAG = "MainActivity";
-
-  //  private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +36,9 @@ public class SearchFilter extends AppCompatActivity {
         final Button button = findViewById(R.id.addcitybtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new DataSearch().AddCity(v);
-/*                EditText editText = findViewById(R.id.actv);
+               //new DataSearch().AddCity(v);
+                EditText editText = findViewById(R.id.actv);
                 String wpisaneMiasto = editText.getText().toString();
-                String[] androidStrings = data.miasta;
-       //         if (Arrays.asList(androidStrings).contains(wpisaneMiasto)) {
-         //           Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    //startActivity(new Intent(SearchFilter.this, SearchFilter.class));
-           //     }
 
                 for (int i = 0; i < data.miasta.length; i++){
                     Log.w("Iter","" + data.miasta.length);
@@ -56,50 +48,10 @@ public class SearchFilter extends AppCompatActivity {
                         break;
                     }
                 }
-                Log.w("Input","" + wpisaneMiasto);*/
+                Log.w("Input","" + wpisaneMiasto);
                 // Code here executes on main thread after user presses button
             }
         });
-
-
-        /*Context cont;
-        LayoutInflater layinf;
-        List<data.miasta> nazwyMiast;
-        ArrayList<data.miasta> miastaArray;
-*/
-
-
-       /* ListView list = (ListView) findViewById(R.id.searchList2);
-        EditText theFilter = (EditText) findViewById(R.id.search);
-        Log.d(TAG, "onCreate: Started.");
-
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Mitch");
-        names.add("Blake");
-        names.add("Shelly");
-        names.add("Jess");
-        names.add("Steve");
-        names.add("Mohammed");
-
-        adapter = new ArrayAdapter(this, R.layout.addcity_layout,R.id.searchResult, names);
-        list.setAdapter(adapter);
-
-        theFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                (SearchFilter.this).adapter.getFilter().filter(charSequence);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
 
     }
 }
