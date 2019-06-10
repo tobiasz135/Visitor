@@ -1,8 +1,12 @@
 package com.palidon.visitor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintLayout.LayoutParams;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -15,11 +19,16 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.palidon.visitor.Data.data;
@@ -31,10 +40,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                //Extra bundle is null
+            } else {
+                int method = extras.getInt("methodName");
+
+                if (method == 1) {
+                    AddIMG();
+                }
+            }
+        }
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,13 +91,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+   //     final ImageView imageView = new ImageView(this);
+        final RelativeLayout rl = (RelativeLayout) findViewById(R.id.dotsLayout);
+     //   imageView.setLayoutParams(new LayoutParams(20, 20)); // value is in pixels
+
+        // RelativeLayout. though you can use xml RelativeLayout here too by `findViewById()`
+        ConstraintLayout ConstLayout = findViewById(R.id.mapLayout);
+/*         if (ConstLayout != null) {
+        ConstLayout.addView(imageView);
+        }
+
+        imageView.setX(50);
+        imageView.setY(50);
+        imageView.setImageResource(R.drawable.ic_visited);
+*/
+  /*      RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(200, 200);
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT); // A position in layout.
+        ImageView imageView = new ImageView(this); // initialize ImageView
+        imageView.setLayoutParams(lp);
+// imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setImageResource(R.drawable.ic_visited);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.dotsLayout);
+        layout.addView(imageView);
+*/
+
+ /*       ConstraintLayout layout = findViewById(R.id.mapLayout);
+        ConstraintSet set = new ConstraintSet();
+
+        ImageView view = new ImageView(v);
+        view.setId(View.generateViewId());
+        layout.addView(view,0);
+        set.clone(layout);
+        set.connect(view.getId(), ConstraintSet.TOP, layout.getId(), ConstraintSet.TOP, 60);
+        set.applyTo(layout);
+   *///final RelativeLayout rl = (RelativeLayout) findViewById(R.id.dotsLayout);
+        RelativeLayout linearLayout = findViewById(R.id.dotsLayout);
+        //linearLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        //linearLayout.setOrientation(RelativeLayout.VERTICAL);
+
+        //Add Imageview
+     //   ImageView imageView = new ImageView(this);
+        //imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //imageView.setImageResource(R.drawable.ic_visited);
+
+     //   linearLayout.addView(imageView);
+     //   setContentView(linearLayout);
 
 
 
 
 
-
-    }
+    };
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -107,6 +177,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("onNewIntent","Odebrano wywołanie");
+        if(intent.getStringExtra("methodName").equals(1)){
+            AddIMG();
+        }
 
+    }
 
+    public void AddIMG() {
+       // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+       // View view = inflater.inflate(R.layout.fragment_map, null);
+       // setContentView(R.layout.activity_main);
+        Log.w("AddIMG()","Modyfikacja obrazu");
+        //setContentView(R.layout.activity_main);
+        ImageView myImage = findViewById(R.id.dot_1);
+        //ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) myImage.getLayoutParams();
+        //marginParams.setMargins(50,0,0,0);
+        myImage.setVisibility(View.INVISIBLE);
+    }
 }

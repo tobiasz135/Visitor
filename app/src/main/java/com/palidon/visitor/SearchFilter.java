@@ -1,8 +1,10 @@
 package com.palidon.visitor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -14,10 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.palidon.visitor.Data.DataSearch;
 import com.palidon.visitor.Data.data;
+import com.palidon.visitor.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +53,17 @@ public class SearchFilter extends AppCompatActivity {
                     }
                 }
                 Log.w("Input","" + wpisaneMiasto);
+
+                MainActivity Addimg = new MainActivity();
+//                Addimg.AddIMG();
+
+                Intent intent = new Intent(SearchFilter.this, com.palidon.visitor.MainActivity.class);
+                intent.putExtra("methodName",1);
+
+                startActivity(intent);
+
                 // Code here executes on main thread after user presses button
+
             }
         });
 
