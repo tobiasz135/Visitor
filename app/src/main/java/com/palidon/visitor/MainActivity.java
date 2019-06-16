@@ -2,6 +2,7 @@ package com.palidon.visitor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Extra bundle is null
             } else {
                 int method = extras.getInt("methodName");
-
+                Log.i("Extras.getMethodname","" + method);
                 if (method == 1) {
                     AddIMG();
                 }
@@ -182,10 +183,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onNewIntent(intent);
         Log.i("onNewIntent","Odebrano wywołanie");
         if(intent.getStringExtra("methodName").equals(1)){
-            AddIMG();
+       //    AddIMG();
         }
 
     }
+
+/*  To jest ten moment, w którym się doweidziałem, że trzeba przerobić tok myślenia.
+
+ */
+
 
     public void AddIMG() {
        // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -194,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.w("AddIMG()","Modyfikacja obrazu");
         //setContentView(R.layout.activity_main);
         ImageView myImage = findViewById(R.id.dot_1);
+        Log.e("IsItReallyNull?","" + myImage);
         //ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) myImage.getLayoutParams();
         //marginParams.setMargins(50,0,0,0);
         myImage.setVisibility(View.INVISIBLE);

@@ -43,10 +43,10 @@ public class SearchFilter extends AppCompatActivity {
                //new DataSearch().AddCity(v);
                 EditText editText = findViewById(R.id.actv);
                 String wpisaneMiasto = editText.getText().toString();
-
-                for (int i = 0; i < data.miasta.length; i++){
-                    Log.w("Iter","" + data.miasta.length);
-                    Log.w("data.miasta","" + data.miasta[i]);
+                int i = 0;
+                for (; i < data.miasta.length; i++){
+                //    Log.w("Iter","" + data.miasta.length);
+                //    Log.w("data.miasta","" + data.miasta[i]);
                     if (data.miasta[i].equals(wpisaneMiasto)){
                         Snackbar.make(v, "Miasto: " + data.miasta[i] + ", index: " + i, Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         break;
@@ -58,7 +58,8 @@ public class SearchFilter extends AppCompatActivity {
 //                Addimg.AddIMG();
 
                 Intent intent = new Intent(SearchFilter.this, com.palidon.visitor.MainActivity.class);
-                intent.putExtra("methodName",1);
+                if( wpisaneMiasto.length() > 0)
+                    intent.putExtra("methodName",1);
 
                 startActivity(intent);
 

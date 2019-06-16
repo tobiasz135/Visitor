@@ -949,6 +949,10 @@ public class data {
         miasta[934] = "Żywiec (ŚL)";
     }
 
+    public int OdwiedzoneMiasta[];
+    {
+        OdwiedzoneMiasta = new int[935];
+    }
 
     public static int Images[];
     static{
