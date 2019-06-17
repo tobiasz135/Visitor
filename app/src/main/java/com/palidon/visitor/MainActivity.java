@@ -2,6 +2,7 @@ package com.palidon.visitor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -37,11 +39,8 @@ import com.palidon.visitor.SearchFilter;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +48,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-        if(savedInstanceState == null) {
+
+
+
+        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 //Extra bundle is null
             } else {
                 int method = extras.getInt("methodName");
-                Log.i("Extras.getMethodname","" + method);
+                int id_miasta = extras.getInt("MIASTO");
+                Log.i("Extras.getMethodname", "" + method);
                 if (method == 1) {
                     AddIMG();
+                    Log.i("String ID","" + id_miasta);
+                    ImageView miasto = findViewById(id_miasta);
+                    Log.i("MiastoView","" + miasto);
+                    //miasto.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -75,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_map);
         }
@@ -85,16 +92,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddCityFragment()).commit();
-               // navigationView.setCheckedItem(R.id.menu_none);
-                startActivity(new Intent(MainActivity.this,SearchFilter.class));
+                // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddCityFragment()).commit();
+                // navigationView.setCheckedItem(R.id.menu_none);
+                startActivity(new Intent(MainActivity.this, SearchFilter.class));
 
             }
         });
 
-   //     final ImageView imageView = new ImageView(this);
+        //     final ImageView imageView = new ImageView(this);
         final RelativeLayout rl = (RelativeLayout) findViewById(R.id.dotsLayout);
-     //   imageView.setLayoutParams(new LayoutParams(20, 20)); // value is in pixels
+        //   imageView.setLayoutParams(new LayoutParams(20, 20)); // value is in pixels
 
         // RelativeLayout. though you can use xml RelativeLayout here too by `findViewById()`
         ConstraintLayout ConstLayout = findViewById(R.id.mapLayout);
@@ -126,27 +133,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         set.connect(view.getId(), ConstraintSet.TOP, layout.getId(), ConstraintSet.TOP, 60);
         set.applyTo(layout);
    *///final RelativeLayout rl = (RelativeLayout) findViewById(R.id.dotsLayout);
-        RelativeLayout linearLayout = findViewById(R.id.dotsLayout);
-        //linearLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View mapV = inflater.inflate(R.layout.fragment_map, null);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(200, 200);
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT); // A position in layout.
+        ImageView imageView = new ImageView(this); // initialize ImageView
+        imageView.setLayoutParams(lp);
+// imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setImageResource(R.drawable.ic_visited);
+        RelativeLayout layout = mapV.findViewById(R.id.dotsLayout);
+        layout.addView(imageView);
+
+        /*RelativeLayout linearLayout = mapV.findViewById(R.id.dotsLayout);
+        linearLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         //linearLayout.setOrientation(RelativeLayout.VERTICAL);
 
-        //Add Imageview
-     //   ImageView imageView = new ImageView(this);
-        //imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        //imageView.setImageResource(R.drawable.ic_visited);
 
-     //   linearLayout.addView(imageView);
-     //   setContentView(linearLayout);
+           ImageView imageView = new ImageView(this);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        imageView.setImageResource(R.drawable.ic_visited);
+        //linearLayout.removeAllViews();
+           linearLayout.addView(imageView);
+         //  setContentView(linearLayout);
+
+*/
 
 
 
 
 
-    };
+
+    }
+
+    ;
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nav_map:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
                 break;
@@ -168,41 +193,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed(){
-       if(drawer.isDrawerOpen(GravityCompat.START)){
-           drawer.closeDrawer(GravityCompat.START);
-       }
-       else{
-           super.onBackPressed();
-       }
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
 
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.i("onNewIntent","Odebrano wywołanie");
-        if(intent.getStringExtra("methodName").equals(1)){
-       //    AddIMG();
+        Log.i("onNewIntent", "Odebrano wywołanie");
+        if (intent.getStringExtra("methodName").equals(1)) {
+            //    AddIMG();
         }
 
     }
 
-/*  To jest ten moment, w którym się doweidziałem, że trzeba przerobić tok myślenia.
+    /*  To jest ten moment, w którym się doweidziałem, że trzeba przerobić tok myślenia.
 
- */
+     */
 
 
     public void AddIMG() {
-       // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-       // View view = inflater.inflate(R.layout.fragment_map, null);
-       // setContentView(R.layout.activity_main);
-        Log.w("AddIMG()","Modyfikacja obrazu");
+        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View mapV = inflater.inflate(R.layout.fragment_map, null);
+        // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // View view = inflater.inflate(R.layout.fragment_map, null);
+        // setContentView(R.layout.activity_main);
+        Log.w("AddIMG()", "Modyfikacja obrazu");
         //setContentView(R.layout.activity_main);
-        ImageView myImage = findViewById(R.id.dot_1);
-        Log.e("IsItReallyNull?","" + myImage);
+        ImageView myImage = mapV.findViewById(R.id.miasto_162);
+        Log.e("IsItReallyNull?", "" + myImage);
         //ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) myImage.getLayoutParams();
         //marginParams.setMargins(50,0,0,0);
-        myImage.setVisibility(View.INVISIBLE);
+        Log.i("IsVisible?", "" + myImage.getVisibility());
+        myImage.setVisibility(View.VISIBLE);
+        Log.i("IsVisible??", "" + myImage.getVisibility());
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        data dane = new data();
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        //editor.putInt("dane", dane.OdwiedzoneMiasta);
+        editor.commit();
     }
 }

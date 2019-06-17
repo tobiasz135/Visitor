@@ -50,16 +50,17 @@ public class SearchFilter extends AppCompatActivity {
                     if (data.miasta[i].equals(wpisaneMiasto)){
                         Snackbar.make(v, "Miasto: " + data.miasta[i] + ", index: " + i, Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         break;
+
                     }
                 }
                 Log.w("Input","" + wpisaneMiasto);
 
-                MainActivity Addimg = new MainActivity();
-//                Addimg.AddIMG();
-
                 Intent intent = new Intent(SearchFilter.this, com.palidon.visitor.MainActivity.class);
-                if( wpisaneMiasto.length() > 0)
+                if( wpisaneMiasto.length() > 0 && data.miasta[i].equals(wpisaneMiasto)){
                     intent.putExtra("methodName",1);
+                    intent.putExtra("MIASTO", i);
+                }
+
 
                 startActivity(intent);
 
