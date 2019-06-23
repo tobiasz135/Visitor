@@ -55,12 +55,19 @@ public class SearchFilter extends AppCompatActivity {
                 }
                 Log.w("Input","" + wpisaneMiasto);
 
+                data dane = new data();
+                dane.OdwiedzoneMiasta[i] = 1;
+
+
+
                 Intent intent = new Intent(SearchFilter.this, com.palidon.visitor.MainActivity.class);
                 if( wpisaneMiasto.length() > 0 && data.miasta[i].equals(wpisaneMiasto)){
                     intent.putExtra("methodName",1);
                     intent.putExtra("MIASTO", i);
                 }
-
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
 
                 startActivity(intent);
 

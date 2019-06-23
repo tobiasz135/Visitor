@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.palidon.visitor.Data.data;
@@ -48,9 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-
-
-
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -61,10 +59,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("Extras.getMethodname", "" + method);
                 if (method == 1) {
                     AddIMG();
-                    Log.i("String ID","" + id_miasta);
-                    ImageView miasto = findViewById(id_miasta);
-                    Log.i("MiastoView","" + miasto);
-                    //miasto.setVisibility(View.VISIBLE);
+                    Log.i("String ID", "" + id_miasta);
+                    //ImageView miasto = findViewById(R.id.miasto_162);
+                    //Log.i("MiastoView","" + miasto);
+                    // miasto.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //   imageView.setLayoutParams(new LayoutParams(20, 20)); // value is in pixels
 
         // RelativeLayout. though you can use xml RelativeLayout here too by `findViewById()`
-        ConstraintLayout ConstLayout = findViewById(R.id.mapLayout);
+       // ConstraintLayout ConstLayout = findViewById(R.id.mapLayout);
 /*         if (ConstLayout != null) {
         ConstLayout.addView(imageView);
         }
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         set.applyTo(layout);
    *///final RelativeLayout rl = (RelativeLayout) findViewById(R.id.dotsLayout);
 
-        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mapV = inflater.inflate(R.layout.fragment_map, null);
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(200, 200);
@@ -159,10 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          //  setContentView(linearLayout);
 
 */
-
-
-
-
 
 
     }
@@ -218,20 +212,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void AddIMG() {
-        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View mapV = inflater.inflate(R.layout.fragment_map, null);
-        // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        // View view = inflater.inflate(R.layout.fragment_map, null);
-        // setContentView(R.layout.activity_main);
-        Log.w("AddIMG()", "Modyfikacja obrazu");
-        //setContentView(R.layout.activity_main);
-        ImageView myImage = mapV.findViewById(R.id.miasto_162);
-        Log.e("IsItReallyNull?", "" + myImage);
-        //ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) myImage.getLayoutParams();
-        //marginParams.setMargins(50,0,0,0);
-        Log.i("IsVisible?", "" + myImage.getVisibility());
-        myImage.setVisibility(View.VISIBLE);
-        Log.i("IsVisible??", "" + myImage.getVisibility());
+        data dane = new data();
+        int i = 0;
+        for(; i < dane.OdwiedzoneMiasta.length; i++) {
+            Log.i("Pętla w AddIMG", "" + dane.OdwiedzoneMiasta[i]);
+            if (dane.OdwiedzoneMiasta[i] == 1) {
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mapV = inflater.inflate(R.layout.fragment_map, null);
+                // LayoutInflater inflater = (LayoutInflater)MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                // View view = inflater.inflate(R.layout.fragment_map, null);
+                // setContentView(R.layout.activity_main);
+                Log.w("AddIMG()", "Modyfikacja obrazu");
+                //setContentView(R.layout.activity_main);
+                ImageView myImage = mapV.findViewById(R.id.miasto_162);
+                Log.e("IsItReallyNull?", "" + myImage);
+                //ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) myImage.getLayoutParams();
+                //marginParams.setMargins(50,0,0,0);
+                Log.i("IsVisible?", "" + myImage.getVisibility());
+                myImage.setVisibility(View.VISIBLE);
+                Log.i("IsVisible??", "" + myImage.getVisibility());
+                refreshView(mapV);
+                //myImage.refreshDrawableState();
+                //mapV.refreshDrawableState();
+                //inflater.inflate(R.layout.activity_main,null);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+            }
+        }
     }
 
 
@@ -245,5 +252,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = sharedPref.edit();
         //editor.putInt("dane", dane.OdwiedzoneMiasta);
         editor.commit();
+    }
+
+    private void refreshView(View v) {
+        v.setVisibility(View.GONE);
+        Log.i("refreshView","Odświeżanie " + v + "...");
+        v.setVisibility(View.VISIBLE);
     }
 }
